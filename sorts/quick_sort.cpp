@@ -14,8 +14,34 @@ int get_uniform_rand(int l, int r) {
 }
 */
 
-int get_uniform_rand(int l, int r) {
+int get_uniform_rand(const int l, const int r) {
     return l + rand() % (r - l + 1);
+}
+
+template <typename TIterator>
+void inplace_quick_sort_stl_based(const TIterator begin, const TIterator end) {
+    if (begin == end) {
+        return;
+    }
+
+    using TValue = typename TIterator::value_type;
+
+    const int iterator_distance = distance(begin, end);
+    const int pivot_iterator_index = get_uniform_rand(0, iterator_distance - 1);
+
+    TIterator pivot_iterator = begin;
+    advance(pivot_iterator, pivot_iterator_index);
+    const TValue pivot = *pivot_iterator;
+
+    TIterator middle_iterator = partition(begin, end, [&pivot] (const TValue& value) {
+        return value < pivot;
+    });
+    inplace_quick_sort_stl_based(begin, middle_iterator);
+
+    middle_iterator = partition(middle_iterator, end, [&pivot] (const TValue& value) {
+        return value <= pivot;
+    });
+    inplace_quick_sort_stl_based(middle_iterator, end);
 }
 
 void inplace_quick_sort(vector<int>& a, const int l, const int r) {
@@ -102,7 +128,9 @@ int main() {
         cin >> a[i];
     }
 
-    inplace_quick_sort(a, 0, n - 1);
+    inplace_quick_sort_stl_based(a.begin(), a.end());
+    // inplace_quick_sort(a, 0, n - 1);
+    // quick_sort_with_additional_memory(a, 0, n - 1);
     for (int i = 0; i < n; ++i) {
         cout << a[i] << " ";
     }
