@@ -12,12 +12,12 @@ int main() {
 
     for (int i = 1; i <= (int)s.length(); i++)
         if (s[i - 1] == 'r')
-            cout << i << endl;
+            cout << i << '\n';
         else
             st.push(i);
 
     while (st.size() > 0) {
-        cout << st.top() << endl;
+        cout << st.top() << '\n';
         st.pop();
     }
 
