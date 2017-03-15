@@ -5,7 +5,7 @@ using namespace std;
 
 int a[4];
 
-int main(){
+int main() {
     string s;
     cin >> s;
     for (char c : s)
@@ -25,7 +25,7 @@ int main(){
     }
     while (a[2] > 0) {
         s[pos] = '3';
-        --a[3];
+        --a[2];
         pos += 2;
     }
 
